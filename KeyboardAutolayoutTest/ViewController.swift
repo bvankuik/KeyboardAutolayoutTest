@@ -11,16 +11,17 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet var textFieldTopConstraint: NSLayoutConstraint!
-    @IBOutlet var textFieldTopLayoutGuideConstraint: NSLayoutConstraint!
     @IBOutlet weak var textField: UITextField!
 
-    var textFieldTopLayoutGuideConstraintConstant: CGFloat?
+    var textFieldTopConstraintConstant: CGFloat?
+    var textFieldOriginY: CGFloat?
     
     func keyboardWillShow(notification: NSNotification) {
         print("keyboardWillShow")
-        self.textFieldTopConstraint.active = false
-        self.textFieldTopLayoutGuideConstraint.active = true
-        self.textFieldTopLayoutGuideConstraint.constant = 0
+        if let originY = self.textFieldOriginY {
+            print("originY=\(originY)")
+            self.textFieldTopConstraint.constant = -originY + topLayoutGuide.length + 22
+        }
         UIView.animateWithDuration(1.0, animations: {
             self.view.layoutIfNeeded()
             }) { (finished) in
@@ -33,15 +34,14 @@ class ViewController: UIViewController {
     
     func keyboardWillHide(notification: NSNotification) {
         print("keyboardWillHide")
-        if let constant = self.textFieldTopLayoutGuideConstraintConstant {
-            self.textFieldTopLayoutGuideConstraint.constant = constant
+        if let constant = self.textFieldTopConstraintConstant {
+            print("constant=\(constant)")
+            self.textFieldTopConstraint.constant = constant
         }
         UIView.animateWithDuration(1.0, animations: {
             self.view.layoutIfNeeded()
 
             }) { (finished) in
-                self.textFieldTopLayoutGuideConstraint.active = false
-                self.textFieldTopConstraint.active = true
         }
     }
     
@@ -59,11 +59,17 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        if let _ = textFieldTopLayoutGuideConstraintConstant {
+        if let _ = textFieldOriginY {
             return
         } else {
-            textFieldTopLayoutGuideConstraintConstant = textField.frame.origin.y
-            print("textFieldTopLayoutGuideConstraintConstant=\(textFieldTopLayoutGuideConstraintConstant)")
+            textFieldOriginY = textField.frame.origin.y
+            print("textFieldOriginY=\(textFieldOriginY)")
+        }
+        
+        if let _ = textFieldTopConstraintConstant {
+            return
+        } else {
+            textFieldTopConstraintConstant = textFieldTopConstraint.constant
         }
     }
 

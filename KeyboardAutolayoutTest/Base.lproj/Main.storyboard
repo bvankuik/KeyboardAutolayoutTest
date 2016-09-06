@@ -40,7 +40,6 @@
                         <constraints>
                             <constraint firstItem="YPT-77-4dM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CPu-Fs-3c9"/>
                             <constraint firstItem="vel-9y-9IU" firstAttribute="top" secondItem="YPT-77-4dM" secondAttribute="bottom" constant="45" id="FIb-UW-o5N"/>
-                            <constraint firstItem="vel-9y-9IU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="178" id="Qw7-le-Uzd"/>
                             <constraint firstItem="m0c-Re-tUf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZGj-kW-2Db"/>
                             <constraint firstItem="YPT-77-4dM" firstAttribute="top" secondItem="m0c-Re-tUf" secondAttribute="bottom" constant="30" id="f5t-YG-H7Z"/>
                             <constraint firstItem="m0c-Re-tUf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="52" id="l8a-id-c3i"/>
@@ -50,7 +49,6 @@
                     <connections>
                         <outlet property="textField" destination="vel-9y-9IU" id="Rfg-AK-47b"/>
                         <outlet property="textFieldTopConstraint" destination="FIb-UW-o5N" id="L1i-od-acv"/>
-                        <outlet property="textFieldTopLayoutGuideConstraint" destination="Qw7-le-Uzd" id="1MU-u3-XtM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
