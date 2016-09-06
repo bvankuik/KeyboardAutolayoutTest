@@ -17,64 +17,41 @@ class ViewController: UIViewController {
     var textFieldOriginY: CGFloat?
     
     func keyboardWillShow(notification: NSNotification) {
-        print("keyboardWillShow")
         if let originY = self.textFieldOriginY {
-            print("originY=\(originY)")
-            self.textFieldTopConstraint.constant = -originY + topLayoutGuide.length + 22
+            self.textFieldTopConstraint.constant = -originY + topLayoutGuide.length +
+                UIApplication.sharedApplication().statusBarFrame.height
         }
-        UIView.animateWithDuration(1.0, animations: {
+        UIView.animateWithDuration(0.3) {
             self.view.layoutIfNeeded()
-            }) { (finished) in
         }
-    }
-    
-    func keyboardDidShow(notification: NSNotification) {
-        print("keyboardDidShow")
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        print("keyboardWillHide")
         if let constant = self.textFieldTopConstraintConstant {
-            print("constant=\(constant)")
             self.textFieldTopConstraint.constant = constant
         }
-        UIView.animateWithDuration(1.0, animations: {
+        UIView.animateWithDuration(0.3) {
             self.view.layoutIfNeeded()
-
-            }) { (finished) in
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardDidShow(_:)),
-                                                         name: UIKeyboardDidShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)),
                                                          name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillHide(_:)),
                                                          name: UIKeyboardWillHideNotification, object: nil)
-        
     }
     
     override func viewDidLayoutSubviews() {
-        if let _ = textFieldOriginY {
-            return
-        } else {
+        if textFieldOriginY == nil {
             textFieldOriginY = textField.frame.origin.y
-            print("textFieldOriginY=\(textFieldOriginY)")
         }
         
-        if let _ = textFieldTopConstraintConstant {
-            return
-        } else {
+        if textFieldTopConstraintConstant == nil {
             textFieldTopConstraintConstant = textFieldTopConstraint.constant
         }
-    }
-
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 }
 
