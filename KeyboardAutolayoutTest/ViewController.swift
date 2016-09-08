@@ -45,6 +45,12 @@ class ViewController: UIViewController {
                                                          name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        // Clear the saved original values because on iPhone, the statusbar disappears in landscape 
+        textFieldOriginY = nil
+        textFieldTopConstraintConstant = nil
+    }
+    
     override func viewDidLayoutSubviews() {
         if textFieldOriginY == nil {
             // Save vertical position
