@@ -17,10 +17,11 @@ class ViewController: UIViewController {
     var textFieldOriginY: CGFloat?
     
     func keyboardWillShow(notification: NSNotification) {
-        if let originY = self.textFieldOriginY {
-            self.textFieldTopConstraint.constant = -originY + topLayoutGuide.length +
-                UIApplication.sharedApplication().statusBarFrame.height
+        if let originY = self.textFieldOriginY, let originalConstant = textFieldTopConstraintConstant {
+            let newConstant = originY - originalConstant - topLayoutGuide.length
+            self.textFieldTopConstraint.constant = -newConstant
         }
+        
         UIView.animateWithDuration(0.3) {
             self.view.layoutIfNeeded()
         }
@@ -46,10 +47,12 @@ class ViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         if textFieldOriginY == nil {
+            // Save vertical position
             textFieldOriginY = textField.frame.origin.y
         }
         
         if textFieldTopConstraintConstant == nil {
+            // Save original constraint its constant
             textFieldTopConstraintConstant = textFieldTopConstraint.constant
         }
     }
